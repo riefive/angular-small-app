@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, retry } from 'rxjs';
 import { environment } from 'src/environment/env';
 import { handleError } from 'src/helpers/helper.error';
@@ -13,8 +13,12 @@ export class CommentService {
 
   constructor(private http: HttpClient) {}
 
-  get() {
-    return this.http.get<Comment[]>(`${environment.apiUrl}/${this.tupleName}`)
+  get(filters: { page?: number, limit?: number } | any = null) {
+    let params = {}
+    if (filters) {
+      params = new HttpParams({ fromString: `_page=${filters.page}&_limit=${filters.limit}`})
+    }  
+    return this.http.get<Comment[]>(`${environment.apiUrl}/${this.tupleName}`, { responseType: 'json', params })
       .pipe(retry(3))
       .pipe<Comment[]>(
         catchError(handleError)

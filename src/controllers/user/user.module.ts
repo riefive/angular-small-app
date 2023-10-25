@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { UserComponent } from './user.component';
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     MatTableModule,
+    MatPaginatorModule,
     RouterModule.forChild(routes)
   ],
   declarations: [
