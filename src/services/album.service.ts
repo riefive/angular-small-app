@@ -3,20 +3,20 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, retry } from 'rxjs';
 import { environment } from 'src/environment/env';
 import { handleError } from 'src/helpers/helper.error';
-import { Post } from 'src/types/post.type';
+import { Album } from 'src/types/album.type';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PostService {
-  private tupleName = 'posts'
+export class AlbumService {
+  private tupleName = 'albums'
 
   constructor(private http: HttpClient) {}
 
   get() {
-    return this.http.get<Post[]>(`${environment.apiUrl}/${this.tupleName}`)
+    return this.http.get<Album[]>(`${environment.apiUrl}/${this.tupleName}`)
       .pipe(retry(3))
-      .pipe<Post[]>(
+      .pipe<Album[]>(
         catchError(handleError)
       );
   }
