@@ -1,6 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
+import { UserService } from "src/services/user.service";
+import { User } from "src/types/user.type";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,7 @@ export class AppComponent {
   isMobile = true;
   isCollapsed = true;
 
-  constructor(private observer: BreakpointObserver) {}
+  constructor(private observer: BreakpointObserver, private userService: UserService) {}
 
   onToggleMenu() {
     if(this.isMobile){
@@ -27,6 +29,9 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.userService.get().subscribe((result: User[]) => {
+      console.log(result)
+    })
     this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
       if(screenSize.matches){
         this.isMobile = true;
