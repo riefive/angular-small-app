@@ -14,6 +14,7 @@ import { AppComponent } from './app.component';
 
 const routes: Routes = [
   { path: 'post', loadChildren: () => import('../controllers/post/post.module').then(module => module.PostModule) },
+  { path: 'comment', loadChildren: () => import('../controllers/comment/comment.module').then(module => module.CommentModule) },
   { path: 'todo', loadChildren: () => import('../controllers/todo/todo.module').then(module => module.TodoModule) },
   { path: 'user', loadChildren: () => import('../controllers/user/user.module').then(module => module.UserModule) }
 ];
