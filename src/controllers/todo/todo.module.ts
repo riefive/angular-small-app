@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from '@angular/material/table';
-import { UserComponent } from './user.component';
+import { TodoComponent } from './todo.component';
 
 const routes: Routes = [
-  { path: '', component: UserComponent },
+  { path: '', component: TodoComponent },
 ];
 
 @NgModule({
@@ -17,8 +17,6 @@ const routes: Routes = [
     MatTableModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [
-    UserComponent
-  ],
+  declarations: [TodoComponent]
 })
-export class UserModule { }
+export class TodoModule { }
