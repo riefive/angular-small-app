@@ -16,7 +16,6 @@ export class TodoComponent implements OnInit {
   ngOnInit() {
     this.displayedColumns = ['title', 'completed']
     this.todoService.get().subscribe((result: Todo[]) => {
-      console.log(result)
       this.displayedData = result
     })
   }

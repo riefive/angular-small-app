@@ -13,6 +13,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
+  { path: 'post', loadChildren: () => import('../controllers/post/post.module').then(module => module.PostModule) },
   { path: 'todo', loadChildren: () => import('../controllers/todo/todo.module').then(module => module.TodoModule) },
   { path: 'user', loadChildren: () => import('../controllers/user/user.module').then(module => module.UserModule) }
 ];
