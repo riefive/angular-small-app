@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TodoService } from 'src/services/todo.service';
+import { ModalRemoveDialogComponent } from 'src/components/modal-remove-dialog/modal-remove-dialog.component';
 import { Todo } from 'src/types/todo.type';
 
 @Component({
@@ -18,7 +20,7 @@ export class TodoComponent implements OnInit {
   public pageSizeOptions = [5, 10, 25, 50];
   pageEvent: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private todoService: TodoService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public dialog: MatDialog, private todoService: TodoService) { }
 
   handlePageEvent(event: PageEvent) {
     this.pageEvent = event;
@@ -27,8 +29,29 @@ export class TodoComponent implements OnInit {
     this.handleFetchTodo(this.pageIndex + 1, this.pageSize)
   }
 
+  handleClickAdd() {
+    this.router.navigate(['create'], { relativeTo: this.route })
+  }
+
   handleClickDetail(id: number) {
     this.router.navigate([id], { relativeTo: this.route })
+  }
+
+  handleOpenDialog(enterAnimationDuration: string, exitAnimationDuration: string, element: string): void {
+    const dialogRef = this.dialog.open(ModalRemoveDialogComponent, {
+      data: {
+        name: element,
+      },
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.name && result.isYes) {
+        this.todoService.remove(Number(element)).subscribe()
+      }
+    });
   }
 
   handleFetchTodo(page = 0, limit = 10) {

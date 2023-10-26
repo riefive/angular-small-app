@@ -21,6 +21,7 @@ export class TodoIdComponent implements OnInit {
   public item: Todo = { userId: 0, id: 0, title: '', completed: false }
   public form!: FormGroup<TodoInput>;
   public detailId = 0
+  public mode = 'add'
 
   constructor(private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private todoService: TodoService) { }
 
@@ -39,22 +40,31 @@ export class TodoIdComponent implements OnInit {
   }
 
   handleSubmit() {
-    if (this.form.invalid) {
-      return;
+    if (this.form.invalid) return;
+    const formValue = this.form.value
+    if (this.mode === 'edit') {
+      this.todoService.update(this.detailId, formValue).subscribe((result: Todo) => {
+        if (result) this.router.navigateByUrl('/todo')
+      })
+    } else {
+      this.todoService.insert(formValue).subscribe((result: Todo) => {
+        if (result) this.router.navigateByUrl('/todo')
+      })
     }
-    console.log(this.form.value);
   }
 
   ngOnInit() {
     this.form = this.builder.group<TodoInput>({
-      id: new FormControl(1),
-      userId: new FormControl(1),
+      id: new FormControl(0, Validators.required),
+      userId: new FormControl(0, Validators.required),
       title: new FormControl('', Validators.required),
       completed: new FormControl(false),
     });
 
     this.route.paramMap.subscribe((result: any) => {
       this.detailId = Number(result.params?.id) || 0
+      this.mode = result.params?.id !== 'create' && this.detailId > 0 ? 'edit' : 'add'
+      if (!this.detailId || this.detailId === 0) return
       this.todoService.getOne(this.detailId).subscribe((result: Todo) => {
         this.item.id = result.id
         this.item.userId = result.userId

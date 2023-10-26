@@ -32,5 +32,29 @@ export class TodoService {
         catchError(handleError)
       );
   }
+
+  insert(payload: any) {
+    return this.http.post<Todo>(`${environment.apiUrl}/${this.tupleName}`, payload, { responseType: 'json' })
+      .pipe(retry(3))
+      .pipe<Todo>(
+        catchError(handleError)
+      );
+  }
+
+  update(id: number, payload: any) {
+    return this.http.put<Todo>(`${environment.apiUrl}/${this.tupleName}/${id}`, payload, { responseType: 'json' })
+      .pipe(retry(3))
+      .pipe<Todo>(
+        catchError(handleError)
+      );
+  }
+
+  remove(id: number) {
+    return this.http.delete<Todo>(`${environment.apiUrl}/${this.tupleName}/${id}`, { responseType: 'json' })
+      .pipe(retry(3))
+      .pipe<Todo>(
+        catchError(handleError)
+      );
+  }
 }
 

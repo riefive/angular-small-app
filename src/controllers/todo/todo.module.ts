@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -11,7 +12,7 @@ import { TodoComponent } from './todo.component';
 import { TodoIdComponent } from './todo-id/todo-id.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 
 const routes: Routes = [
   { path: '', component: TodoComponent },
@@ -34,6 +35,7 @@ const routes: Routes = [
     MatCheckboxModule,
     MatInputModule,
     MatFormFieldModule,
+    MatDialogModule,
     RouterModule.forChild(routes)
   ],
   declarations: [TodoComponent, TodoIdComponent]
