@@ -10,8 +10,7 @@ export class AppComponent {
   title = 'angular-small-app';
   type: string = 'main'
  
-  constructor(private userService: UserService) {
-  }
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.type = this.userService.isLoggedIn() ? 'main' : 'auth'

@@ -7,14 +7,12 @@ import { authGuard } from 'src/guards/auth.guard';
 const routes: Routes = [
   { 
     path: '', 
-    component: TemplateAuthComponent, 
     children: [
       { path: 'login', loadChildren: () => import('../controllers/login/login.module').then(module => module.LoginModule) }
     ]
   },
   {
     path: '', 
-    component: TemplateMainComponent, 
     children: [
       { path: 'post', loadChildren: () => import('../controllers/post/post.module').then(module => module.PostModule) },
       { path: 'comment', loadChildren: () => import('../controllers/comment/comment.module').then(module => module.CommentModule) },

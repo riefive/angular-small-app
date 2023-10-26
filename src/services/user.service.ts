@@ -52,6 +52,6 @@ export class UserService {
 
   public isLoggedIn()
   {
-    return this.user.length > 0 || true;
+    return this.user.length > 0;
   }
 }

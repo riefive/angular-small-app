@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { FlexLayoutModule } from '@angular/flex-layout'
 import { RoutingModule } from 'src/modules/routing.module';
 import { UiMaterialFontModule } from 'src/modules/ui-material-front.module';
 import { TemplateAuthComponent } from 'src/components/template-auth/template-auth.component';
@@ -13,8 +14,9 @@ import { AppComponent } from './app.component';
     BrowserModule, 
     BrowserAnimationsModule,
     HttpClientModule,
-    UiMaterialFontModule,
-    RoutingModule
+    FlexLayoutModule,
+    RoutingModule,
+    UiMaterialFontModule
   ],
   providers: [],
   declarations: [	
