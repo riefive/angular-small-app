@@ -68,7 +68,7 @@ export class TodoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.displayedColumns = ['title', 'completed', 'actions']
+    this.displayedColumns = ['id', 'userId', 'title', 'completed', 'actions']
     this.handleFetchTodo()
     this.handleFetchTodoCount()
   }
