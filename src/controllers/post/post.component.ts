@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { toTruncate } from "src/helpers/helper.string";
 import { PostService } from 'src/services/post.service';
+import { ModalRemoveDialogComponent } from 'src/components/modal-remove-dialog/modal-remove-dialog.component';
 import { Post } from 'src/types/post.type';
 
 @Component({
@@ -18,13 +21,38 @@ export class PostComponent implements OnInit {
   public pageSizeOptions = [5, 10, 25, 50];
   pageEvent: any;
 
-  constructor(private postService: PostService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public dialog: MatDialog, private postService: PostService) { }
 
   handlePageEvent(event: PageEvent) {
     this.pageEvent = event;
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.handleFetchPost(this.pageIndex + 1, this.pageSize)
+  }
+
+  handleClickAdd() {
+    this.router.navigate(['create'], { relativeTo: this.route })
+  }
+
+  handleClickDetail(id: number) {
+    this.router.navigate([id], { relativeTo: this.route })
+  }
+
+  handleOpenDialog(enterAnimationDuration: string, exitAnimationDuration: string, element: string): void {
+    const dialogRef = this.dialog.open(ModalRemoveDialogComponent, {
+      data: {
+        name: element,
+      },
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.name && result.isYes) {
+        this.postService.remove(Number(element)).subscribe()
+      }
+    });
   }
 
   handleFetchPost(page = 0, limit = 10) {
@@ -44,7 +72,7 @@ export class PostComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.displayedColumns = ['title', 'body']
+    this.displayedColumns = ['id', 'userId', 'title', 'actions']
     this.handleFetchPost()
     this.handleFetchPostCount() 
   }

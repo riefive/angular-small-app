@@ -24,4 +24,36 @@ export class PostService {
         catchError(handleError)
       );
   }
+
+  getOne(id: number) {
+    return this.http.get<Post>(`${environment.apiUrl}/${this.tupleName}/${id}`, { responseType: 'json' })
+      .pipe(retry(3))
+      .pipe<Post>(
+        catchError(handleError)
+      );
+  }
+
+  insert(payload: any) {
+    return this.http.post<Post>(`${environment.apiUrl}/${this.tupleName}`, payload, { responseType: 'json' })
+      .pipe(retry(3))
+      .pipe<Post>(
+        catchError(handleError)
+      );
+  }
+
+  update(id: number, payload: any) {
+    return this.http.put<Post>(`${environment.apiUrl}/${this.tupleName}/${id}`, payload, { responseType: 'json' })
+      .pipe(retry(3))
+      .pipe<Post>(
+        catchError(handleError)
+      );
+  }
+
+  remove(id: number) {
+    return this.http.delete<Post>(`${environment.apiUrl}/${this.tupleName}/${id}`, { responseType: 'json' })
+      .pipe(retry(3))
+      .pipe<Post>(
+        catchError(handleError)
+      );
+  }
 }

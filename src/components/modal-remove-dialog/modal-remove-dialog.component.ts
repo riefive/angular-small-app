@@ -12,11 +12,11 @@ import { MatDialogRef, MatDialogModule, MAT_DIALOG_DATA } from '@angular/materia
 export class ModalRemoveDialogComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, public dialogRef: MatDialogRef<ModalRemoveDialogComponent>) {}
 
-  onNoClick(): void {
+  onClickNo(): void {
     this.dialogRef.close();
   }
 
-  onYesClick(): void {
+  onClickYes(): void {
     this.data.isYes = true
   }
 

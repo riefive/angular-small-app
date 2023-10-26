@@ -2,6 +2,7 @@
   <div class="my-full-width my-flex-end">
     <button mat-raised-button color="primary" class="my-button-flex" (click)="handleClickAdd()">Add Todo</button>
   </div>
+  
   <table mat-table [dataSource]="displayedData" class="mat-elevation-z8">
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

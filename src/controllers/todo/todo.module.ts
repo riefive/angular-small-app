@@ -8,11 +8,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { TodoComponent } from './todo.component';
-import { TodoIdComponent } from './todo-id/todo-id.component';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
+import { TodoComponent } from './todo.component';
+import { TodoIdComponent } from './todo-id/todo-id.component';
 
 const routes: Routes = [
   { path: '', component: TodoComponent },
