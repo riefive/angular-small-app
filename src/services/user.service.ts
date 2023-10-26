@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, retry } from 'rxjs';
+import { catchError, retry, of } from 'rxjs';
 import { environment } from 'src/environment/env';
 import { handleError } from 'src/helpers/helper.error';
 import { User } from 'src/types/user.type';
@@ -10,6 +10,8 @@ import { User } from 'src/types/user.type';
 })
 export class UserService {
   private tupleName = 'users'
+
+  private user = '';
 
   constructor(private http: HttpClient) {}
 
@@ -23,5 +25,33 @@ export class UserService {
       .pipe<User[]>(
         catchError(handleError)
       );
+  }
+
+  login(user: string, pass: string)
+  {
+    let result = {
+      status: false
+    };
+
+    if (user == 'admin' && pass == 'admin')
+      result.status = true;
+
+    return of(result)
+      .pipe((obj) => {
+        obj.subscribe(r => {
+          this.setUser(user);
+        });
+        return obj;
+      }); 
+  }
+
+  private setUser(user: string)
+  {
+    this.user = user;
+  }
+
+  public isLoggedIn()
+  {
+    return this.user.length > 0;
   }
 }

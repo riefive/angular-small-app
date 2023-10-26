@@ -6,6 +6,7 @@ import { toTruncate } from "src/helpers/helper.string";
 import { PostService } from 'src/services/post.service';
 import { ModalRemoveDialogComponent } from 'src/components/modal-remove-dialog/modal-remove-dialog.component';
 import { Post } from 'src/types/post.type';
+import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-post',
@@ -21,7 +22,10 @@ export class PostComponent implements OnInit {
   public pageSizeOptions = [5, 10, 25, 50];
   pageEvent: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, public dialog: MatDialog, private postService: PostService) { }
+  constructor(private route: ActivatedRoute, private router: Router, public dialog: MatDialog, 
+    private postService: PostService, private userSrv: UserService) {
+      console.log(this.userSrv.isLoggedIn());
+    }
 
   handlePageEvent(event: PageEvent) {
     this.pageEvent = event;
