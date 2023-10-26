@@ -1,53 +1,25 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from "@angular/common/http";
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTableModule } from '@angular/material/table';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule, Routes } from "@angular/router";
-import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { RoutingModule } from 'src/modules/routing.module';
+import { UiMaterialFontModule } from 'src/modules/ui-material-front.module';
+import { TemplateAuthComponent } from 'src/components/template-auth/template-auth.component';
+import { TemplateMainComponent } from 'src/components/template-main/template-main.component';
 import { AppComponent } from './app.component';
-import { authGuard } from 'src/guards/auth.guard';
-
-const routes: Routes = [
-  { path: 'login', loadChildren: () => import('../controllers/login/login.module').then(module => module.LoginModule) },
-  {
-    path: '', 
-    children: [
-      { path: 'post', loadChildren: () => import('../controllers/post/post.module').then(module => module.PostModule) },
-      { path: 'comment', loadChildren: () => import('../controllers/comment/comment.module').then(module => module.CommentModule) },
-      { path: 'album', loadChildren: () => import('../controllers/album/album.module').then(module => module.AlbumModule) },
-      { path: 'photo', loadChildren: () => import('../controllers/photo/photo.module').then(module => module.PhotoModule) },
-      { path: 'todo', loadChildren: () => import('../controllers/todo/todo.module').then(module => module.TodoModule) },
-      { path: 'user', loadChildren: () => import('../controllers/user/user.module').then(module => module.UserModule) }
-    ],
-    canActivateChild: [authGuard]
-  }
-];
 
 @NgModule({
-  declarations: [	
-    AppComponent,
-  ],
   imports: [
-    AppRoutingModule,
     BrowserModule, 
     BrowserAnimationsModule,
     HttpClientModule,
-    MatIconModule,
-    MatButtonModule, 
-    MatListModule,
-    MatSidenavModule,
-    MatTableModule,
-    MatToolbarModule,
-    RouterModule.forRoot(routes)
+    UiMaterialFontModule,
+    RoutingModule
   ],
-  exports: [RouterModule],
   providers: [],
+  declarations: [	
+    AppComponent, TemplateAuthComponent, TemplateMainComponent
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -4,9 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toTruncate } from "src/helpers/helper.string";
 import { PostService } from 'src/services/post.service';
+import { UserService } from 'src/services/user.service';
 import { ModalRemoveDialogComponent } from 'src/components/modal-remove-dialog/modal-remove-dialog.component';
 import { Post } from 'src/types/post.type';
-import { UserService } from 'src/services/user.service';
 
 @Component({
   selector: 'app-post',
@@ -23,8 +23,8 @@ export class PostComponent implements OnInit {
   pageEvent: any;
 
   constructor(private route: ActivatedRoute, private router: Router, public dialog: MatDialog, 
-    private postService: PostService, private userSrv: UserService) {
-      console.log(this.userSrv.isLoggedIn());
+    private postService: PostService, private userService: UserService) {
+      console.log(this.userService.isLoggedIn());
     }
 
   handlePageEvent(event: PageEvent) {

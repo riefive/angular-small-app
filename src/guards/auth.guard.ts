@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   // if (!loggedIn) return false;
   if (!loggedIn)
   {
-    return router.parseUrl("/login?msg=IQWIYE");
+   //  return router.parseUrl("/login?msg=IQWIYE");
   }
   return true;
 };
