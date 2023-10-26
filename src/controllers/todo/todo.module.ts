@@ -9,6 +9,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TodoComponent } from './todo.component';
 import { TodoIdComponent } from './todo-id/todo-id.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCardModule } from '@angular/material/card';
 
 const routes: Routes = [
   { path: '', component: TodoComponent },
@@ -25,8 +28,14 @@ const routes: Routes = [
     MatCheckboxModule,
     MatTableModule,
     MatPaginatorModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatFormFieldModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [TodoComponent]
+  declarations: [TodoComponent, TodoIdComponent]
 })
 export class TodoModule { }

@@ -1,17 +1,47 @@
 <div class="my-custom-div">
-  <p>
-    <mat-form-field appearance="outline" class="my-full-width">
-      <mat-label>Title</mat-label>
-      <input matInput [value]="item.title">
-    </mat-form-field>
-  </p>
-  <p>
-    <mat-checkbox
-      [checked]="item.completed"
-      [disabled]="true"
-      color="primary"
-    >
-    <mat-label>Completed</mat-label>
-  </mat-checkbox>
-  </p>
+  <mat-card>
+    <form novalidate [formGroup]="form" method="post" (ngSubmit)="handleSubmit()">
+      <mat-card-content>
+        <div>
+          <mat-form-field appearance="outline" class="my-full-width">
+            <mat-label>User Id</mat-label>
+            <input matInput type="number" formControlName="id">
+          </mat-form-field>
+          <div *ngIf="checkInvalidLocal('id')">
+            <span *ngIf="getFormControlLocal('id').errors?.['required']" [ngStyle]="{ color: 'red' }">Id harus diisi!</span>
+          </div>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="my-full-width">
+            <mat-label>User Id</mat-label>
+            <input matInput type="number" formControlName="userId">
+          </mat-form-field>
+          <div *ngIf="checkInvalidLocal('userId')">
+            <span *ngIf="getFormControlLocal('userId').errors?.['required']" [ngStyle]="{ color: 'red' }">userId harus diisi!</span>
+          </div>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="my-full-width">
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title">
+          </mat-form-field>
+          <div *ngIf="checkInvalidLocal('title')">
+            <span *ngIf="getFormControlLocal('title').errors?.['required']" [ngStyle]="{ color: 'red' }">Title harus diisi!</span>
+          </div>
+        </div>
+        <p>
+          <mat-checkbox
+            color="primary"
+            formControlName="completed"
+          >
+            <mat-label>Completed</mat-label>
+          </mat-checkbox>
+        </p>
+        <p>
+          <button mat-raised-button class="my-button" (click)="handleButtonClick('cancel')">Cancel</button>
+          <button mat-raised-button type="submit" color="primary" class="my-button">Save</button>
+        </p>  
+      </mat-card-content>
+    </form>
+  </mat-card>
 </div>
