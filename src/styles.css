@@ -4,6 +4,11 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-.my-custom-table {
+.my-custom-div, .my-custom-table  {
+  margin-bottom: 50px;
   padding: 2.5rem;
+}
+
+.my-full-width {
+  width: 100%;
 }

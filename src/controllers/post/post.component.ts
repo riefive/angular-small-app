@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { toTruncate } from "src/helpers/helper.string";
 import { PostService } from 'src/services/post.service';
 import { Post } from 'src/types/post.type';
 
@@ -29,7 +30,10 @@ export class PostComponent implements OnInit {
   handleFetchPost(page = 0, limit = 10) {
     const params = { page, limit }
     this.postService.get(params).subscribe((result: Post[]) => {
-      this.displayedData = result
+      this.displayedData = result?.map((item: Post) => {
+        item.body = toTruncate(item.body, 100)
+        return item
+      })
     })
   }
 

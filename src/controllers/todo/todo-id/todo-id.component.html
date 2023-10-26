@@ -1,0 +1,17 @@
+<div class="my-custom-div">
+  <p>
+    <mat-form-field appearance="outline" class="my-full-width">
+      <mat-label>Title</mat-label>
+      <input matInput [value]="item.title">
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-checkbox
+      [checked]="item.completed"
+      [disabled]="true"
+      color="primary"
+    >
+    <mat-label>Completed</mat-label>
+  </mat-checkbox>
+  </p>
+</div>

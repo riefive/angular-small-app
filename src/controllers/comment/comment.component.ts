@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { toTruncate } from "src/helpers/helper.string";
 import { CommentService } from 'src/services/comment.service';
 import { Comment } from 'src/types/comment.type';
 
@@ -29,7 +30,10 @@ export class CommentComponent implements OnInit {
   handleFetchComment(page = 0, limit = 10) {
     const params = { page, limit }
     this.commonService.get(params).subscribe((result: Comment[]) => {
-      this.displayedData = result
+      this.displayedData = result?.map((item: Comment) => {
+        item.body = toTruncate(item.body, 100)
+        return item
+      })
     })
   }
 

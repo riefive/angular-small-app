@@ -12,7 +12,7 @@ export class AppComponent {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
   isMobile = true;
-  isCollapsed = true;
+  isCollapsed = false;
   menus: any[] = []
 
   constructor(private observer: BreakpointObserver) {}

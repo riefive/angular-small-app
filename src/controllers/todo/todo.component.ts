@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TodoService } from 'src/services/todo.service';
 import { Todo } from 'src/types/todo.type';
 
@@ -17,13 +18,17 @@ export class TodoComponent implements OnInit {
   public pageSizeOptions = [5, 10, 25, 50];
   pageEvent: any;
 
-  constructor(private todoService: TodoService) { }
+  constructor(private route: ActivatedRoute, private router: Router, private todoService: TodoService) { }
 
   handlePageEvent(event: PageEvent) {
     this.pageEvent = event;
     this.pageIndex = event.pageIndex;
     this.pageSize = event.pageSize;
     this.handleFetchTodo(this.pageIndex + 1, this.pageSize)
+  }
+
+  handleClickDetail(id: number) {
+    this.router.navigate([id], { relativeTo: this.route })
   }
 
   handleFetchTodo(page = 0, limit = 10) {
@@ -40,7 +45,7 @@ export class TodoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.displayedColumns = ['title', 'completed']
+    this.displayedColumns = ['title', 'completed', 'actions']
     this.handleFetchTodo()
     this.handleFetchTodoCount()
   }

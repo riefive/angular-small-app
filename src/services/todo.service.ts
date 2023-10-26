@@ -24,5 +24,13 @@ export class TodoService {
         catchError(handleError)
       );
   }
+
+  getOne(id: number) {
+    return this.http.get<Todo>(`${environment.apiUrl}/${this.tupleName}/${id}`, { responseType: 'json' })
+      .pipe(retry(3))
+      .pipe<Todo>(
+        catchError(handleError)
+      );
+  }
 }
 

@@ -26,6 +26,10 @@ export class PhotoComponent implements OnInit {
     this.handleFetchPhoto(this.pageIndex + 1, this.pageSize)
   }
 
+  handlePhotoClick(url: string) {
+    window.open(url)
+  }
+
   handleFetchPhoto(page = 0, limit = 10) {
     const params = { page, limit }
     this.photoService.get(params).subscribe((result: Photo[]) => {
@@ -40,7 +44,7 @@ export class PhotoComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.displayedColumns = ['title']
+    this.displayedColumns = ['title', 'thumbnailUrl']
     this.handleFetchPhoto()
     this.handleFetchPhotoCount()
   }
