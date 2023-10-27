@@ -1,0 +1,63 @@
+<app-template-main>
+  <div class="my-custom-table">
+    <div class="my-full-width my-flex-end">
+      <button mat-raised-button color="primary" class="my-button-flex" (click)="handleClickAdd()">Add Todo</button>
+    </div>
+    
+    <table mat-table [dataSource]="displayedData" class="mat-elevation-z8">
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="userId">
+        <th mat-header-cell *matHeaderCellDef> User Id </th>
+        <td mat-cell *matCellDef="let element"> {{ element.userId }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{ element.title }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="completed">
+        <th mat-header-cell *matHeaderCellDef> Completed </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-checkbox
+            [checked]="element.completed"
+            [disabled]="true"
+            color="primary"
+          >
+          </mat-checkbox>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element;" [ngStyle]="{ width: '160px' }">
+          <button mat-icon-button (click)="handleClickDetail(element.id)">
+            <mat-icon>edit</mat-icon>        
+          </button>
+          <button mat-icon-button (click)="handleOpenDialog('0ms', '0ms', element.id)">
+            <mat-icon color="warn">delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+    </table>
+
+    <mat-paginator #paginator
+      aria-label="Select page"
+      class="paginator"
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageIndex]="pageIndex"
+      [pageSizeOptions]="pageSizeOptions"
+      [showFirstLastButtons]="true"
+      (page)="handlePageEvent($event)"
+    >
+    </mat-paginator>
+  </div>
+</app-template-main>
