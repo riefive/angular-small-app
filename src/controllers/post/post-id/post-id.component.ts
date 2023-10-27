@@ -23,7 +23,11 @@ export class PostIdComponent implements OnInit {
   public detailId = 0
   public mode = 'add'
 
-  constructor(private route: ActivatedRoute, private router: Router, private builder: FormBuilder, private postService: PostService) { }
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private builder: FormBuilder, 
+    private postService: PostService) { }
 
   checkInvalidLocal(name: string) {
     return checkInvalid(this.form, name)

@@ -1,7 +1,5 @@
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 export function handleError(err: any, caught: Observable<any>) {
-  console.log(err);
-  console.log(caught);
-  return caught;
+  return of([]);
 }

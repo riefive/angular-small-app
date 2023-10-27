@@ -27,8 +27,7 @@ export class UserService {
       );
   }
 
-  login(user: string, pass: string)
-  {
+  login(user: string, pass: string) {
     let result = {
       status: false
     };
@@ -45,13 +44,29 @@ export class UserService {
       }); 
   }
 
-  private setUser(user: string)
-  {
+  
+  loginJwt(user: string, password: string) {
+    // const result = { status: false }
+    const payload = { email: user, password }
+    const fetching = this.http.post(`${environment.apiUrlFake}/v1/auth/login`, payload, { responseType: 'json' })
+      .pipe(retry(3))
+      .pipe(
+        catchError(handleError)
+      )
+      .subscribe((res) => {
+        console.log(res)
+        this.setUser(user);
+        return true;
+      });
+
+    return fetching;
+  }
+
+  private setUser(user: string) {
     this.user = user;
   }
 
-  public isLoggedIn()
-  {
+  public isLoggedIn() {
     return this.user.length > 0;
   }
 }
