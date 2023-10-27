@@ -1,0 +1,19 @@
+<app-template-auth>
+  <div class="my-custom-div">
+    <mat-card>
+      <mat-card-content>
+        <form [formGroup]="form" method="post" (ngSubmit)="handleLogin()">
+          <mat-form-field appearance="outline" [style]="{ width: '250px' }">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="Username" formControlName="username">
+          </mat-form-field><br>
+          <mat-form-field appearance="outline" [ngStyle]="{ width: '250px' }">
+            <mat-label>Password</mat-label>
+            <input matInput type="password" placeholder="password" formControlName="password">
+          </mat-form-field><br>
+          <button type="submit" mat-raised-button color="primary" [style]="{ width: '250px' }">Login</button>
+        </form>
+        </mat-card-content>
+      </mat-card>
+  </div>
+</app-template-auth>

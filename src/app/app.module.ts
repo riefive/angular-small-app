@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { FlexLayoutModule } from '@angular/flex-layout'
-import { RoutingModule } from 'src/modules/routing.module';
+import { AppRoutingModule } from './app-routing.module';
 import { UiMaterialFontModule } from 'src/modules/ui-material-front.module';
 import { TemplateAuthComponent } from 'src/components/template-auth/template-auth.component';
 import { TemplateMainComponent } from 'src/components/template-main/template-main.component';
@@ -15,12 +15,12 @@ import { AppComponent } from './app.component';
     BrowserAnimationsModule,
     HttpClientModule,
     FlexLayoutModule,
-    RoutingModule,
+    AppRoutingModule,
     UiMaterialFontModule
   ],
   providers: [],
   declarations: [	
-    AppComponent, TemplateAuthComponent, TemplateMainComponent
+    AppComponent, TemplateMainComponent
   ],
   bootstrap: [AppComponent],
 })

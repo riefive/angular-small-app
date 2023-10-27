@@ -1,18 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TemplateAuthComponent } from 'src/components/template-auth/template-auth.component';
 import { TemplateMainComponent } from 'src/components/template-main/template-main.component';
 import { authGuard } from 'src/guards/auth.guard';
 
 const routes: Routes = [
-  { 
-    path: '', 
-    children: [
-      { path: 'login', loadChildren: () => import('../controllers/login/login.module').then(module => module.LoginModule) }
-    ]
-  },
-  {
-    path: '',
+  /*{
+    path: 'test',
     children: [
       { path: 'post', loadChildren: () => import('../controllers/post/post.module').then(module => module.PostModule) },
       { path: 'comment', loadChildren: () => import('../controllers/comment/comment.module').then(module => module.CommentModule) },
@@ -22,7 +15,7 @@ const routes: Routes = [
       { path: 'user', loadChildren: () => import('../controllers/user/user.module').then(module => module.UserModule) }
     ],
     canActivateChild: [authGuard]
-  }
+  }*/
 ];
 
 @NgModule({
