@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, retry } from 'rxjs';
 import { environment } from 'src/environment/env';
-import { handleError } from 'src/helpers/helper.error';
+import { handleError } from 'src/helpers/helper.http';
 import { Album } from 'src/types/album.type';
 
 @Injectable({

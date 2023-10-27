@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { catchError, retry, of } from 'rxjs';
 import { environment } from 'src/environment/env';
-import { handleError } from 'src/helpers/helper.error';
+import { getDecodeToken, handleError } from 'src/helpers/helper.http';
 import { User } from 'src/types/user.type';
 
 @Injectable({
@@ -10,8 +11,9 @@ import { User } from 'src/types/user.type';
 })
 export class UserService {
   private tupleName = 'users'
-
   private user = '';
+  private properties: any = {}
+  private router = inject(Router)
 
   constructor(private http: HttpClient) {}
 
@@ -44,26 +46,41 @@ export class UserService {
       }); 
   }
 
-  
   loginJwt(user: string, password: string) {
-    // const result = { status: false }
     const payload = { email: user, password }
     const fetching = this.http.post(`${environment.apiUrlFake}/v1/auth/login`, payload, { responseType: 'json' })
-      .pipe(retry(3))
+      .pipe(retry(1))
       .pipe(
         catchError(handleError)
       )
       .subscribe((res) => {
-        console.log(res)
-        this.setUser(user);
-        return true;
+        if (!res) {
+          alert('Gagal login')
+          return false;
+        } else {
+          const decoded = getDecodeToken(res?.access_token)
+          if (decoded) {
+            this.setProperties(decoded)
+            this.setUser(user)
+          }
+          this.router.navigateByUrl('/')
+          return true;
+        }
       });
-
     return fetching;
   }
 
   private setUser(user: string) {
     this.user = user;
+  }
+
+  private setProperties(data: any) {
+    this.properties = data;
+  }
+
+  public clear() {
+    this.setUser('')
+    this.setProperties({})
   }
 
   public isLoggedIn() {

@@ -19,6 +19,7 @@ import { CdkTreeModule } from '@angular/cdk/tree';
 import { PortalModule } from '@angular/cdk/portal';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { TemplateMainComponent } from 'src/components/template-main/template-main.component';
+import { IndexComponent } from './index.component';
 import { AlbumComponent } from './album/album.component';
 import { CommentComponent } from './comment/comment.component';
 import { PhotoComponent } from './photo/photo.component';
@@ -49,15 +50,21 @@ const materialModules = [
 ];
 
 const routes: Routes = [
-  { path: 'album', component: AlbumComponent },
-  { path: 'comment', component: CommentComponent },
-  { path: 'photo', component: PhotoComponent },
-  { path: 'post', component: PostComponent },
-  { path: 'post/:id', component: PostIdComponent },
-  { path: 'todo', component: TodoComponent },
-  { path: 'todo/:id', component: TodoIdComponent },
-  { path: 'user', component: UserComponent },
-  // { canActivate: [authGuard] }
+  { 
+    path: '',
+    children: [
+      { path: '', component: IndexComponent },
+      { path: 'album', component: AlbumComponent },
+      { path: 'comment', component: CommentComponent },
+      { path: 'photo', component: PhotoComponent },
+      { path: 'post', component: PostComponent },
+      { path: 'post/:id', component: PostIdComponent },
+      { path: 'todo', component: TodoComponent },
+      { path: 'todo/:id', component: TodoIdComponent },
+      { path: 'user', component: UserComponent },
+    ],
+    canActivateChild: [authGuard]
+  }
 ];
 
 @NgModule({
@@ -73,6 +80,7 @@ const routes: Routes = [
     ...materialModules
   ],
   declarations: [
+    IndexComponent,
     AlbumComponent, 
     CommentComponent, 
     PhotoComponent, 

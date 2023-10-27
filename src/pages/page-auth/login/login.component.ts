@@ -28,13 +28,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     const formValue = this.form.value
     const username = formValue.username
     const pswd = formValue?.password
-    this.userService.loginJwt(username, pswd)
-    let sub = this.userService.login(username, pswd).subscribe(result => {
-      if (result) {
-        this.router.navigateByUrl('/post')
-      }
-    });
-    this.subs.push(sub);
+    let result = this.userService.loginJwt(username, pswd)
+    this.subs.push(result);
   }
 
   ngOnDestroy(): void {

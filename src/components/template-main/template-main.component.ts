@@ -33,7 +33,8 @@ export class TemplateMainComponent implements OnInit {
       { path: '/album', name: 'Album', icon: 'photo_library' },
       { path: '/photo', name: 'Photo', icon: 'photo' },
       { path: '/todo', name: 'Todo', icon: 'assignment' },
-      { path: '/user', name: 'User', icon: 'people' }
+      { path: '/user', name: 'User', icon: 'people' },
+      { path: '/logout', name: 'Logout', icon: 'logout' }
     ]
     this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
       if(screenSize.matches){
