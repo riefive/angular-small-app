@@ -76,6 +76,7 @@ export class UserService {
     if (object.status !== 201) {
       alert('Gagal login')
     }
+    return true
   }
 
   private setUser(user: string) {

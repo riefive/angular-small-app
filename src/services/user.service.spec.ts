@@ -1,8 +1,8 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, inject } from '@angular/core/testing';
-import { UserService } from './user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { UserService } from './user.service';
 
 fdescribe('Service: ServiceUser', () => {
   let srvUser: UserService;
@@ -71,6 +71,19 @@ fdescribe('Service: ServiceUser', () => {
     const object = { access_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsI…zg0fQ.rPnp198XS5kVWZtqhRPu0f2czCKlkQSjuyZ2sD3yR_E'} 
     const isLogin = srvUser.afterSuccessLogin(mockUser.user, object, false)
     expect(isLogin).toBeTrue()
+    done()
+  })
+
+  it('User service after failed login', (done: DoneFn) => {
+    const isFailed = srvUser.afterFailedLogin(new Error(JSON.stringify({ status: 400, message: 'Error not found' })))
+    expect(isFailed).toBeTrue()
+    done()
+  })
+
+  it('User service logout', (done: DoneFn) => {
+    srvUser.clear()
+    const isLogin = srvUser.isLoggedIn()
+    expect(isLogin).toBeFalse()
     done()
   })
 });
