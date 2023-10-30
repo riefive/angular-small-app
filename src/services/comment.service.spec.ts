@@ -4,7 +4,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { CommentService } from './comment.service';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('Service: Comment', () => {
+fdescribe('Service: Comment', () => {
   let srvComment: CommentService;
 
   beforeEach(() => {

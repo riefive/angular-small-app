@@ -53,30 +53,29 @@ export class UserService {
       .pipe(
         catchError(handleErrorThrow)
       )
-      .subscribe({
-        next: (res) => {
-          const decoded = getDecodeToken(res?.access_token)
-          if (decoded) {
-            this.setProperties(decoded)
-            this.setUser(user)
-          }
-          this.router.navigateByUrl('/')
-          return true;
-        },
-        error: (err) => {
-          const string = err.toString().replace(/error:/i, '').trim()
-          let object: any = {}
-          try {
-            object = JSON.parse(string)
-          } catch (error) {
-          }
-          if (object.status !== 201) {
-            alert('Gagal login')
-          }
-          console.log(object);
-        },
-      });
     return fetching;
+  }
+
+  afterSuccessLogin(user: string, res: any, isNavigated: boolean) {
+    const decoded = getDecodeToken(res.access_token)
+    if (decoded) {
+      this.setProperties(decoded)
+      this.setUser(user)
+    }
+    if (isNavigated) this.router.navigateByUrl('/')
+    return true;
+  }
+
+  afterFailedLogin(err: any) {
+    const string = err.toString().replace(/error:/i, '').trim()
+    let object: any = {}
+    try {
+      object = JSON.parse(string)
+    } catch (error) {
+    }
+    if (object.status !== 201) {
+      alert('Gagal login')
+    }
   }
 
   private setUser(user: string) {

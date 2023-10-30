@@ -4,7 +4,7 @@ import { TestBed, inject } from '@angular/core/testing';
 import { AlbumService } from './album.service';
 import { HttpClientModule } from '@angular/common/http';
 
-describe('Service: Album', () => {
+fdescribe('Service: Album', () => {
   let srv: AlbumService;
   beforeEach(() => {
     TestBed.configureTestingModule({

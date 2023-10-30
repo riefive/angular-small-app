@@ -2,7 +2,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AlbumService } from 'src/services/album.service';
-import { AlbumComponent } from './album.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -15,6 +14,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CommentComponent } from './comment.component';
 import { TemplateMainComponent } from 'src/components/template-main/template-main.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -37,10 +37,10 @@ const materialModules = [
     MatToolbarModule
 ];
 
-fdescribe("AlbumComponent", () =>{
-    let component: AlbumComponent;
+fdescribe("CommentComponent", () =>{
+    let component: CommentComponent;
     let el: HTMLElement;
-    let fixture: ComponentFixture<AlbumComponent>;
+    let fixture: ComponentFixture<CommentComponent>;
 
     beforeEach(() => {
         TestBed.configureTestingModule({
@@ -52,12 +52,12 @@ fdescribe("AlbumComponent", () =>{
                 ...materialModules
             ],
             declarations: [
-                AlbumComponent,
+                CommentComponent,
                 TemplateMainComponent
             ]
         });
-        fixture = TestBed.createComponent(AlbumComponent);
-        
+
+        fixture = TestBed.createComponent(CommentComponent);
         component = fixture.componentInstance;
         el = fixture.debugElement.nativeElement;
     });
@@ -67,12 +67,12 @@ fdescribe("AlbumComponent", () =>{
     });
 
     it("Should call inited function", () =>{
-        const spyOnHandleFetchAlbum = spyOn(component, "handleFetchAlbum").and.callThrough();
-        const spyOnHandleFetchAlbumCount = spyOn(component, "handleFetchAlbumCount").and.callThrough();
+        const spyOnHandleFetchComment = spyOn(component, "handleFetchComment").and.callThrough();
+        const spyOnHandleFetchCommentCount = spyOn(component, "handleFetchCommentCount").and.callThrough();
         component.ngOnInit();
 
-        expect(spyOnHandleFetchAlbum).toHaveBeenCalled();
-        expect(spyOnHandleFetchAlbumCount).toHaveBeenCalled();
+        expect(spyOnHandleFetchComment).toHaveBeenCalled();
+        expect(spyOnHandleFetchCommentCount).toHaveBeenCalled();
     });
 
     it("Should next page", (done: DoneFn) => {
@@ -83,12 +83,7 @@ fdescribe("AlbumComponent", () =>{
         fixture.whenStable().then(() => {
             fixture.detectChanges();
             let nextBtn = el.ownerDocument.querySelector(".mat-mdc-paginator-navigation-next");
-            // console.log(nextBtn);
-            // let body = el.ownerDocument.querySelector("table");
-            // console.log(body);
-            // console.log(component);
             (nextBtn as any).click();
-
             expect(spyOnHandlePageEvent).toHaveBeenCalled();
             done();
         });

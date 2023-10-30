@@ -28,7 +28,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     const formValue = this.form.value
     const username = formValue.username
     const pswd = formValue?.password
-    let result = this.userService.loginJwt(username, pswd)
+    let result = this.userService.loginJwt(username, pswd).subscribe({
+      next: (res) => {
+        this.userService.afterSuccessLogin(username, res, true);
+      },
+      error: (err) => {
+        this.userService.afterFailedLogin(err);
+      },
+    });
     this.subs.push(result);
   }
 
