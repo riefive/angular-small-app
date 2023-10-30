@@ -42,7 +42,7 @@ const materialModules = [
     MatToolbarModule
 ];
 
-fdescribe("AlbumComponent", () =>{
+describe("AlbumComponent", () =>{
     let component: AlbumComponent;
     let el: HTMLElement;
     let fixture: ComponentFixture<AlbumComponent>;
