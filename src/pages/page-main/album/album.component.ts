@@ -35,7 +35,7 @@ export class AlbumComponent implements OnInit {
 
   handleFetchAlbumCount() {
     this.albumService.get().subscribe((result: Album[]) => {
-      this.length = result?.length || 0
+      this.length = result.length
     })
   }
 

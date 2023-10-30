@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, retry, of } from 'rxjs';
 import { environment } from 'src/environment/env';
-import { getDecodeToken, handleError } from 'src/helpers/helper.http';
+import { getDecodeToken, handleError, handleErrorThrow } from 'src/helpers/helper.http';
 import { User } from 'src/types/user.type';
 
 @Injectable({
@@ -51,13 +51,10 @@ export class UserService {
     const fetching = this.http.post(`${environment.apiUrlFake}/v1/auth/login`, payload, { responseType: 'json' })
       .pipe(retry(1))
       .pipe(
-        catchError(handleError)
+        catchError(handleErrorThrow)
       )
-      .subscribe((res) => {
-        if (!res) {
-          alert('Gagal login')
-          return false;
-        } else {
+      .subscribe({
+        next: (res) => {
           const decoded = getDecodeToken(res?.access_token)
           if (decoded) {
             this.setProperties(decoded)
@@ -65,7 +62,19 @@ export class UserService {
           }
           this.router.navigateByUrl('/')
           return true;
-        }
+        },
+        error: (err) => {
+          const string = err.toString().replace(/error:/i, '').trim()
+          let object: any = {}
+          try {
+            object = JSON.parse(string)
+          } catch (error) {
+          }
+          if (object.status !== 201) {
+            alert('Gagal login')
+          }
+          console.log(object);
+        },
       });
     return fetching;
   }

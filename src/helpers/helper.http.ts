@@ -1,4 +1,4 @@
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 export const getDecodeToken = (jwtToken: string) => {
   if (!jwtToken || (typeof jwtToken === 'string' && jwtToken?.trim()?.length === 0) || typeof window === 'undefined') return null
@@ -14,4 +14,8 @@ export const getDecodeToken = (jwtToken: string) => {
 
 export function handleError(err: any, caught: Observable<any>) {
   return of(null);
+}
+
+export function handleErrorThrow(err: any, caught: Observable<any>) {
+  return throwError(() => new Error(JSON.stringify(err)));
 }
