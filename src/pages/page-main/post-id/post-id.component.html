@@ -6,7 +6,7 @@
           <div>
             <mat-form-field appearance="outline" class="my-full-width">
               <mat-label>User Id</mat-label>
-              <input matInput type="number" formControlName="id">
+              <input id="my-id" matInput type="number" formControlName="id">
             </mat-form-field>
             <div *ngIf="checkInvalidLocal('id')">
               <span *ngIf="getFormControlLocal('id').errors?.['required']" [ngStyle]="{ color: 'red' }">Id harus diisi!</span>
@@ -15,7 +15,7 @@
           <div>
             <mat-form-field appearance="outline" class="my-full-width">
               <mat-label>User Id</mat-label>
-              <input matInput type="number" formControlName="userId">
+              <input id="my-userid" matInput type="number" formControlName="userId">
             </mat-form-field>
             <div *ngIf="checkInvalidLocal('userId')">
               <span *ngIf="getFormControlLocal('userId').errors?.['required']" [ngStyle]="{ color: 'red' }">userId harus diisi!</span>
@@ -24,7 +24,7 @@
           <div>
             <mat-form-field appearance="outline" class="my-full-width">
               <mat-label>Title</mat-label>
-              <input matInput formControlName="title">
+              <input id="my-title" matInput formControlName="title">
             </mat-form-field>
             <div *ngIf="checkInvalidLocal('title')">
               <span *ngIf="getFormControlLocal('title').errors?.['required']" [ngStyle]="{ color: 'red' }">Title harus diisi!</span>
@@ -33,7 +33,7 @@
           <div>
             <mat-form-field appearance="outline" class="my-full-width">
               <mat-label>Body</mat-label>
-              <textarea matInput [rows]="4" formControlName="body"></textarea>
+              <textarea id="my-body" matInput [rows]="4" formControlName="body"></textarea>
             </mat-form-field>
             <div *ngIf="checkInvalidLocal('body')">
               <span *ngIf="getFormControlLocal('body').errors?.['required']" [ngStyle]="{ color: 'red' }">Body harus diisi!</span>
@@ -41,7 +41,7 @@
           </div>
           <p>
             <button mat-raised-button class="my-button" (click)="handleButtonClick('cancel')">Cancel</button>
-            <button mat-raised-button type="submit" color="primary" class="my-button">Save</button>
+            <button id="my-button-submit" mat-raised-button type="submit" color="primary" class="my-button">Save</button>
           </p>  
         </mat-card-content>
       </form>

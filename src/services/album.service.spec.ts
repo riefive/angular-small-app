@@ -3,6 +3,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { AlbumService } from './album.service';
 import { HttpClientModule } from '@angular/common/http';
+import { of } from 'rxjs';
 
 fdescribe('Service: Album', () => {
   let srv: AlbumService;
@@ -40,8 +41,21 @@ fdescribe('Service: Album', () => {
       }).subscribe(d => {
         expect(d.length).toEqual(10);
         expect(d[0].id).toBeGreaterThan(0);
-        // console.log(d);
         done();
       });
+  });
+
+  it('Sevice get list from spy', (done: DoneFn) => {
+    const albumServiceSpy = jasmine.createSpyObj('AlbumService', ['get']);
+    const dataFake = [
+      { userId: 1, id: 2, title: 'sunt qui excepturi placeat culpa' }
+    ]
+    albumServiceSpy.get.and.returnValue(of(dataFake));
+
+    albumServiceSpy.get().subscribe((result: any) => {
+      expect(result).not.toBeNull();
+      expect(result[0].id).toBeGreaterThan(0);
+      done();
+    });
   });
 });

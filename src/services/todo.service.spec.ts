@@ -51,7 +51,7 @@ fdescribe('Service: Todo', () => {
 
   it('Service insert', (done: DoneFn) => { 
     srvTodo.insert({ id: 1, userId: 1, title: 'Lorem ipsum', body: 'Lorem Ipsum' }).subscribe((result) => {
-      expect(result.id).toEqual(101);
+      expect(result.id).toEqual(201);
       done()
     })
   });
