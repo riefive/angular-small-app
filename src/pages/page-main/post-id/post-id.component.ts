@@ -47,14 +47,11 @@ export class PostIdComponent implements OnInit {
     if (this.form.invalid) return;
     const formValue = this.form.value
     if (this.mode === 'edit') {
-      this.postService.update(this.detailId, formValue).subscribe((result: Post) => {
-        if (result) this.router.navigateByUrl('/post')
-      })
+      this.postService.update(this.detailId, formValue).subscribe()
     } else {
-      this.postService.insert(formValue).subscribe((result: Post) => {
-        if (result) this.router.navigateByUrl('/post')
-      })
+      this.postService.insert(formValue).subscribe()
     }
+    this.router.navigateByUrl('/post')
   }
 
   handleGetOne() {

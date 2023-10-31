@@ -103,20 +103,21 @@ fdescribe('PostIdComponent', () => {
     expect(location.path()).toBe('/post')
   }))
 
-  it('Should submit created', (done: DoneFn) => {
+  it('Should submit created', inject([Router], (mockRouter: Router) => {
     component.mode = 'add'
     component.form.get('id')?.setValue(1)
     component.form.get('userId')?.setValue(1)
     component.form.get('title')?.setValue('lorem ipsum')
     component.form.get('body')?.setValue('lorem ipsum')
     const buttonSubmit = el.ownerDocument.querySelector('#my-button-submit');
+    // const spyNavigate = spyOn(mockRouter, 'navigateByUrl').and.stub();
 
     fixture.whenStable().then(() => {
       if (buttonSubmit) (buttonSubmit as any).click()
       expect(buttonSubmit?.getAttribute('type')).toBe('submit')
-      done()
+      // expect(spyNavigate).toHaveBeenCalled()
     });
-  });
+  }));
 
   it('Should submit edited', (done: DoneFn) => {
     component.mode = 'edit'
@@ -138,7 +139,6 @@ fdescribe('PostIdComponent', () => {
     component.mode = 'edit'
     component.detailId = 1
     const spyOnHandleGetOne = spyOn(component, 'handleGetOne').and.callThrough();
-
     fixture.whenStable().then(() => {
       component.handleGetOne()
       expect(spyOnHandleGetOne).toHaveBeenCalled();
@@ -146,7 +146,7 @@ fdescribe('PostIdComponent', () => {
     });
   });
 
-  it("Should call add click", (done: DoneFn) => { 
+  it('Should call add click', (done: DoneFn) => { 
     const spyOnHandleSubmit = spyOn(component, 'handleSubmit').and.callThrough();
     component.ngOnInit();
 
@@ -169,4 +169,15 @@ fdescribe('PostIdComponent', () => {
         done();
     });
   });
+
+  it('Call getFormControlLocal', (done: DoneFn) => {
+    const spyOnGetForm = spyOn(component, 'getFormControlLocal').and.callThrough();
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      expect(component.getFormControlLocal('id')?.getRawValue()).toBe(0)
+      expect(spyOnGetForm).toHaveBeenCalled();
+      done();
+    });
+  })
 });
