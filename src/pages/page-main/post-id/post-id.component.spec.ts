@@ -48,31 +48,16 @@ const materialModules = [
 
 fdescribe('PostIdComponent', () => {
     let component: PostIdComponent;
+    let app: any
     let el: HTMLElement;
     let fixture: ComponentFixture<PostIdComponent>;
-    // let route: ActivatedRoute;
-    let location: Location;
     let router: Router;
-    /*
-    let router = { 
-      navigate: jasmine.createSpy('navigate'), 
-      navigateByUrl: jasmine.createSpy('navigateByUrl') 
-    };
-    */
-
-    const paramsSubject = new BehaviorSubject({ id: 1 } as any);
+    let location: Location;
 
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
-          PostService,
-          // { provide: Router, useValue: router }
-          /*
-          {
-            provide: ActivatedRoute,
-            useValue: { params: paramsSubject },
-          },
-          */
+          PostService
         ],
         imports:[
             HttpClientModule,
@@ -82,19 +67,20 @@ fdescribe('PostIdComponent', () => {
             ReactiveFormsModule,
             RouterTestingModule.withRoutes([
               { path: 'post', component: PostComponent },
+              { path: 'post/:id', component: PostIdComponent }
             ]),
             ...materialModules
         ],
         declarations: [ PostIdComponent, TemplateMainComponent ]
       })
       //.compileComponents();
-      // route = TestBed.inject(ActivatedRoute);
     });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(PostIdComponent);
     component = fixture.componentInstance;
     el = fixture.debugElement.nativeElement;
+    app = fixture.debugElement.componentInstance;
     router = TestBed.inject(Router)
     location = TestBed.inject(Location);
     fixture.detectChanges();
@@ -105,14 +91,59 @@ fdescribe('PostIdComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should be new', (done) => { 
-    paramsSubject.next({ id: 'create' });
-    done();
-    /*
-    route.paramMap.subscribe((params: any) => {
-      expect(params.id).toBe('create');
+  it('Should navigate to post v1', fakeAsync(() => {
+    router.navigate(['/post']);
+    tick();
+    expect(location.path()).toBe('/post')
+  }))
+
+  it('Should navigate to post v2', fakeAsync(() => {
+    component.handleButtonClick('cancel');
+    tick()
+    expect(location.path()).toBe('/post')
+  }))
+
+  it('Should submit created', (done: DoneFn) => {
+    component.mode = 'add'
+    component.form.get('id')?.setValue(1)
+    component.form.get('userId')?.setValue(1)
+    component.form.get('title')?.setValue('lorem ipsum')
+    component.form.get('body')?.setValue('lorem ipsum')
+    const buttonSubmit = el.ownerDocument.querySelector('#my-button-submit');
+
+    fixture.whenStable().then(() => {
+      if (buttonSubmit) (buttonSubmit as any).click()
+      expect(buttonSubmit?.getAttribute('type')).toBe('submit')
+      done()
     });
-    */
+  });
+
+  it('Should submit edited', (done: DoneFn) => {
+    component.mode = 'edit'
+    component.detailId = 1
+    component.form.get('id')?.setValue(1)
+    component.form.get('userId')?.setValue(1)
+    component.form.get('title')?.setValue('lorem ipsum')
+    component.form.get('body')?.setValue('lorem ipsum')
+    const buttonSubmit = el.ownerDocument.querySelector('#my-button-submit');
+
+    fixture.whenStable().then(() => {
+      if (buttonSubmit) (buttonSubmit as any).click()
+      expect(buttonSubmit?.getAttribute('type')).toBe('submit')
+      done()
+    });
+  });
+
+  it('Should call handle get one', (done: DoneFn) => {
+    component.mode = 'edit'
+    component.detailId = 1
+    const spyOnHandleGetOne = spyOn(component, 'handleGetOne').and.callThrough();
+
+    fixture.whenStable().then(() => {
+      component.handleGetOne()
+      expect(spyOnHandleGetOne).toHaveBeenCalled();
+      done();
+    });
   });
 
   it("Should call add click", (done: DoneFn) => { 
@@ -122,44 +153,20 @@ fdescribe('PostIdComponent', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
         fixture.detectChanges();
-        component.mode = 'post'
+        component.mode = 'edit'
+        component.detailId = 1
         const myId = el.ownerDocument.querySelector('#my-id')
         const myUseId = el.ownerDocument.querySelector('#my-userid')
         const myTitle = el.ownerDocument.querySelector('#my-title')
         const myBody = el.ownerDocument.querySelector('#my-body')
         const buttonSubmit = el.ownerDocument.querySelector('#my-button-submit');
-        if (myId) myId.setAttribute('value', '1')
-        if (myUseId) myUseId.setAttribute('value', '1')
-        if (myTitle) myTitle.setAttribute('value', 'Lorem')
-        if (myBody) myBody.setAttribute('value', 'Lorem Ipsum')
+        if (myId) component.form.get('id')?.setValue(1)
+        if (myUseId) component.form.get('userId')?.setValue(1)
+        if (myTitle) component.form.get('title')?.setValue('Lorem')
+        if (myBody) component.form.get('body')?.setValue('Lorem Ipsum')
         if (buttonSubmit) (buttonSubmit as any).click()
         expect(spyOnHandleSubmit).toHaveBeenCalled();
         done();
     });
   });
-
-  it('Should navigate to post', fakeAsync(() => {
-    router.navigate(['/post']);
-    tick();
-    expect(location.path()).toBe('/post')
-  }))
-
-  /*
-  it('Should navigate to post', inject([Router], (routerInject: Router) => {
-    // spyOn(routerInject, 'navigate').and.stub();
-    // spyOn(routerInject, 'navigateByUrl').and.stub();
-    // const spyOnHandleClick = spyOn(component, 'handleButtonClick').and.callThrough();
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      fixture.detectChanges();
-      // component.handleButtonClick('cancel')
-      // expect(spyOnHandleClick('cancel')).toHaveBeenCalled();
-      // const spy = router.navigate
-      // const navArgs = spy.calls.first().args[0];
-      // console.log(navArgs)
-      // expect(routerInject.navigate).toHaveBeenCalledWith(['/post']);
-      // expect(routerInject.navigateByUrl).toHaveBeenCalledWith('/post');
-    })
-  }));
-  */
 });

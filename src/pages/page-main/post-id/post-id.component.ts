@@ -57,6 +57,16 @@ export class PostIdComponent implements OnInit {
     }
   }
 
+  handleGetOne() {
+    this.postService.getOne(this.detailId).subscribe((result: Post) => {
+      this.item.id = result.id
+      this.item.userId = result.userId
+      this.item.title = result.title
+      this.item.body = result.body
+      this.form.setValue(this.item)
+    })
+  }
+
   ngOnInit() {
     this.form = this.builder.group<PostInput>({
       id: new FormControl(0, Validators.required),
@@ -68,14 +78,8 @@ export class PostIdComponent implements OnInit {
     this.route.paramMap.subscribe((result: any) => {
       this.detailId = Number(result.params?.id) || 0
       this.mode = result.params?.id !== 'create' && this.detailId > 0 ? 'edit' : 'add'
-      if (!this.detailId || this.detailId === 0) return
-      this.postService.getOne(this.detailId).subscribe((result: Post) => {
-        this.item.id = result.id
-        this.item.userId = result.userId
-        this.item.title = result.title
-        this.item.body = result.body
-        this.form.setValue(this.item)
-      })
+      if (!this.detailId) return
+      this.handleGetOne()
     });
   }
 }
